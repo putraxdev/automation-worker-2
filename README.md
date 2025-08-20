@@ -139,9 +139,6 @@ docker-compose exec automation-worker npm run clean
 # Access database
 docker-compose exec postgres psql -U postgres -d automation_db
 ```
-
-## 📁 File Structure
-
 ## 📁 File Structure
 
 ```
