@@ -1,0 +1,5 @@
+# Run data collection at 08:00, 12:00, and 15:00 WIB
+0 8,12,15 * * * cd /app && node src/collect-data.js >> /var/log/cron.log 2>&1
+
+# Run data cleansing daily at 02:00 WIB
+0 2 * * * cd /app && node src/clean-data.js >> /var/log/cron.log 2>&1

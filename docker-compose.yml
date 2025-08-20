@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: automation_postgres
+    environment:
+      POSTGRES_DB: automation_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password123
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-db:/docker-entrypoint-initdb.d
+    networks:
+      - automation_network
+
+  automation-worker:
+    build: .
+    container_name: automation_worker
+    environment:
+      - NODE_ENV=production
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=automation_db
+      - DB_USER=postgres
+      - DB_PASSWORD=password123
+      - TZ=Asia/Jakarta
+    volumes:
+      - ./data:/home/cron
+      - /etc/localtime:/etc/localtime:ro
+    depends_on:
+      - postgres
+    networks:
+      - automation_network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+
+networks:
+  automation_network:
+    driver: bridge

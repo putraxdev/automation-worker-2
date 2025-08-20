@@ -1,0 +1,4 @@
+# Keep this directory for Docker volume mounting
+# CSV files will be stored here and accessible from host
+*
+!.gitkeep
